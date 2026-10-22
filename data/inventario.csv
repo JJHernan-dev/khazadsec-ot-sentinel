@@ -1,0 +1,8 @@
+id,nombre,zona,tipo,funcion,criticidad,acceso_restringido,actualizaciones_definidas
+IT-01,Equipo de administracion IT,IT,Estacion de trabajo,Administracion de sistemas,media,si,si
+FW-01,Cortafuegos IT-OT,Frontera,Firewall,Control del trafico entre zonas,alta,si,si
+OT-01,Servidor SCADA,OT,Servidor SCADA,Supervision y alarmas del proceso,alta,si,no
+OT-02,HMI,OT,Interfaz HMI,Visualizacion y operacion por el usuario,media,si,si
+OT-03,PLC,OT,Controlador PLC,Ejecucion de logica de control,alta,si,no
+OT-04,Unidad de adquisicion de datos,OT,Adquisicion de datos,Recogida de datos del proceso,media,no,no
+OT-05,Estacion de ingenieria,OT,Estacion de ingenieria,Configuracion y mantenimiento del PLC,alta,si,si

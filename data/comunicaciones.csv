@@ -1,0 +1,7 @@
+id_comunicacion,origen,destino,finalidad,estado,control_previsto
+COM-01,OT-02,OT-01,Supervision e intercambio de informacion,permitida,Acceso limitado a la funcion de supervision
+COM-02,OT-02,OT-03,Interaccion entre HMI y PLC,permitida,Comunicacion prevista en el escenario
+COM-03,OT-01,OT-03,Recogida de estados y datos del PLC,permitida,Comunicacion limitada a la supervision
+COM-04,OT-03,OT-04,Envio de datos del proceso,permitida,Mecanismo de comunicacion pendiente de definir
+COM-05,OT-05,OT-03,Mantenimiento y configuracion del PLC,condicional,Acceso autorizado solo durante mantenimiento
+COM-06,IT-01,OT-03,Acceso directo desde IT al PLC,no_autorizada,Bloquear el acceso directo y revisar los controles de frontera
