@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" width="1280" height="360" role="img" aria-labelledby="t d">
+  <title id="t">KhazadSec OT Sentinel</title>
+  <desc id="d">Banner animado del laboratorio de ciberseguridad industrial KhazadSec OT Sentinel con la arquitectura IT/OT de Erebor Energy</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0e16"/>
+      <stop offset="1" stop-color="#171d2e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#b8862b"/>
+      <stop offset="0.35" stop-color="#f6d77a"/>
+      <stop offset="0.5" stop-color="#fff2b8"/>
+      <stop offset="0.65" stop-color="#f6d77a"/>
+      <stop offset="1" stop-color="#b8862b"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-0.6 0; 0.6 0; -0.6 0" dur="6s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="fw" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff9d3c"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5eead4" stop-opacity="0"/>
+      <stop offset="1" stop-color="#5eead4" stop-opacity="0.35"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="frame"><rect width="1280" height="360" rx="14"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <!-- Fondo -->
+    <rect width="1280" height="360" fill="url(#bg)"/>
+    <rect width="1280" height="360" fill="url(#grid)"/>
+    <circle cx="1000" cy="180" r="320" fill="#f6d77a" opacity="0.04"/>
+
+    <!-- Brasas flotantes -->
+    <g fill="#f6d77a" filter="url(#glow)">
+      <circle cx="120" cy="340" r="2"><animate attributeName="cy" values="350;-10" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="9s" repeatCount="indefinite"/></circle>
+      <circle cx="300" cy="350" r="1.5"><animate attributeName="cy" values="350;-10" dur="11s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="11s" begin="2s" repeatCount="indefinite"/></circle>
+      <circle cx="480" cy="350" r="2.2"><animate attributeName="cy" values="350;-10" dur="8s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="8s" begin="1s" repeatCount="indefinite"/></circle>
+      <circle cx="610" cy="350" r="1.6"><animate attributeName="cy" values="350;-10" dur="12s" begin="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.7;0" dur="12s" begin="4s" repeatCount="indefinite"/></circle>
+      <circle cx="220" cy="350" r="1.4"><animate attributeName="cy" values="350;-10" dur="10s" begin="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.7;0" dur="10s" begin="6s" repeatCount="indefinite"/></circle>
+    </g>
+
+    <!-- ===== Texto izquierdo ===== -->
+    <!-- Logo hexagonal -->
+    <g>
+      <polygon points="76,42 93,52 93,72 76,82 59,72 59,52" fill="#0a0e16" stroke="#f6d77a" stroke-width="2" filter="url(#glow)">
+        <animate attributeName="stroke-opacity" values="1;0.45;1" dur="3s" repeatCount="indefinite"/>
+      </polygon>
+      <text x="76" y="68" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#f6d77a">K</text>
+    </g>
+    <text x="110" y="67" font-family="Consolas, 'SFMono-Regular', 'Courier New', monospace" font-size="15" letter-spacing="3" fill="#5eead4" opacity="0">
+      OT SENTINEL LAB  ·  EREBOR ENERGY
+      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.2s" fill="freeze"/>
+    </text>
+
+    <text x="58" y="150" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="72" font-weight="800" fill="url(#gold)" opacity="0">
+      KhazadSec
+      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.4s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" from="-30 0" to="0 0" dur="1s" begin="0.4s" fill="freeze"/>
+    </text>
+    <text x="58" y="218" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="700" fill="#e6edf3" opacity="0">
+      OT Sentinel
+      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.8s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" from="-30 0" to="0 0" dur="1s" begin="0.8s" fill="freeze"/>
+    </text>
+
+    <rect x="58" y="238" width="0" height="3" rx="1.5" fill="#f6d77a">
+      <animate attributeName="width" from="0" to="120" dur="1s" begin="1.2s" fill="freeze"/>
+    </rect>
+
+    <text x="58" y="275" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#9fb0c3" opacity="0">
+      Análisis de riesgo sobre inventarios de activos industriales IT/OT
+      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="1.4s" fill="freeze"/>
+    </text>
+
+    <!-- Chips -->
+    <g font-family="Consolas, 'SFMono-Regular', 'Courier New', monospace" font-size="14" text-anchor="middle" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="1.8s" fill="freeze"/>
+      <rect x="58" y="298" width="86" height="28" rx="14" fill="none" stroke="#f6d77a" stroke-opacity="0.6"/>
+      <text x="101" y="317" fill="#f6d77a">Python</text>
+      <rect x="154" y="298" width="64" height="28" rx="14" fill="none" stroke="#5eead4" stroke-opacity="0.6"/>
+      <text x="186" y="317" fill="#5eead4">CSV</text>
+      <rect x="228" y="298" width="100" height="28" rx="14" fill="none" stroke="#9fb0c3" stroke-opacity="0.6"/>
+      <text x="278" y="317" fill="#9fb0c3">Markdown</text>
+      <rect x="338" y="298" width="140" height="28" rx="14" fill="none" stroke="#ff9d3c" stroke-opacity="0.6"/>
+      <text x="408" y="317" fill="#ff9d3c">Ciber IT/OT</text>
+    </g>
+
+    <!-- ===== Diagrama IT / OT ===== -->
+    <g>
+      <!-- Zona IT -->
+      <rect x="690" y="52" width="150" height="256" rx="10" fill="#38bdf8" fill-opacity="0.05" stroke="#38bdf8" stroke-opacity="0.55" stroke-dasharray="6 5"/>
+      <text x="765" y="74" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="13" letter-spacing="2" fill="#38bdf8">ZONA IT</text>
+
+      <!-- Zona OT -->
+      <rect x="900" y="52" width="340" height="256" rx="10" fill="#f6d77a" fill-opacity="0.04" stroke="#f6d77a" stroke-opacity="0.55" stroke-dasharray="6 5"/>
+      <text x="1070" y="74" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="13" letter-spacing="2" fill="#f6d77a">ZONA OT</text>
+
+      <!-- Enlaces -->
+      <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M820 180 H856" stroke="#38bdf8" stroke-opacity="0.7"/>
+        <path d="M884 180 H910 V130 H940" stroke="#f6d77a" stroke-opacity="0.6"/>
+        <path d="M1040 130 H1100" stroke="#f6d77a" stroke-opacity="0.6"/>
+        <path d="M990 150 V215" stroke="#f6d77a" stroke-opacity="0.6"/>
+        <path d="M1040 235 H1100" stroke="#f6d77a" stroke-opacity="0.6"/>
+      </g>
+
+      <!-- Nodo Admin IT -->
+      <g font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle">
+        <rect x="710" y="160" width="110" height="40" rx="8" fill="#0f1a2b" stroke="#38bdf8"/>
+        <text x="765" y="185" fill="#bae6fd">Admin IT</text>
+
+        <!-- SCADA -->
+        <rect x="940" y="110" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
+        <text x="990" y="135" fill="#fde9a8">SCADA</text>
+
+        <!-- HMI -->
+        <rect x="1100" y="110" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
+        <text x="1150" y="135" fill="#fde9a8">HMI</text>
+
+        <!-- PLC (con marca de riesgo) -->
+        <rect x="940" y="215" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
+        <text x="990" y="240" fill="#fde9a8">PLC</text>
+        <rect x="936" y="211" width="108" height="48" rx="11" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0">
+          <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
+        </rect>
+
+        <!-- DAQ -->
+        <rect x="1100" y="215" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
+        <text x="1150" y="240" fill="#fde9a8">DAQ</text>
+      </g>
+
+      <!-- Marca de hallazgo sobre PLC -->
+      <g transform="translate(1040 215)" font-family="Consolas, 'Courier New', monospace" font-size="12" font-weight="700" text-anchor="middle">
+        <circle r="10" fill="#f43f5e" filter="url(#glow)">
+          <animate attributeName="r" values="9;12;9" dur="1.2s" repeatCount="indefinite"/>
+        </circle>
+        <text y="4" fill="#fff">!</text>
+      </g>
+
+      <!-- Cortafuegos -->
+      <rect x="856" y="106" width="28" height="148" rx="6" fill="url(#fw)" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.75;1;0.75" dur="2.4s" repeatCount="indefinite"/>
+      </rect>
+      <g stroke="#0a0e16" stroke-opacity="0.45" stroke-width="2">
+        <path d="M856 136 H884 M856 166 H884 M856 196 H884 M856 226 H884"/>
+      </g>
+      <text x="870" y="278" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="11" letter-spacing="1" fill="#ff9d3c">FW</text>
+
+      <!-- Paquetes permitidos -->
+      <circle r="5" fill="#5eead4" filter="url(#glow)" opacity="0">
+        <animateMotion dur="4.5s" repeatCount="indefinite" path="M820 180 H910 V130 H1100"/>
+        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.05;0.5;0.95;1" dur="4.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="5" fill="#fde9a8" filter="url(#glow)" opacity="0">
+        <animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" path="M990 130 V235 H1100"/>
+        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.05;0.5;0.95;1" dur="3.2s" begin="1.6s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="4" fill="#5eead4" filter="url(#glow)" opacity="0">
+        <animateMotion dur="4.5s" begin="2.2s" repeatCount="indefinite" path="M1100 130 H990 V235 H1040"/>
+        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.05;0.5;0.95;1" dur="4.5s" begin="2.2s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Paquete bloqueado por el cortafuegos -->
+      <circle r="5" fill="#f43f5e" filter="url(#glow)" opacity="0">
+        <animateMotion dur="3s" begin="0.8s" repeatCount="indefinite" path="M730 120 H850" keyTimes="0;1" keyPoints="0;1" calcMode="linear"/>
+        <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.1;0.7;0.8;1" dur="3s" begin="0.8s" repeatCount="indefinite"/>
+      </circle>
+      <g stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" opacity="0">
+        <path d="M845 114 L857 126 M857 114 L845 126"/>
+        <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.6;0.75;0.9;1" dur="3s" begin="0.8s" repeatCount="indefinite"/>
+      </g>
+
+      <!-- Línea de escaneo -->
+      <rect x="0" y="52" width="36" height="256" fill="url(#scan)">
+        <animateTransform attributeName="transform" type="translate" values="690 0; 1204 0; 690 0" keyTimes="0;0.5;1" dur="7s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+
+    <!-- Líneas decorativas doradas -->
+    <rect x="0" y="0" width="1280" height="3" fill="url(#gold)"/>
+    <rect x="0" y="357" width="1280" height="3" fill="url(#gold)"/>
+  </g>
+</svg>
