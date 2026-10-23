@@ -1,0 +1,62 @@
+[1mdiff --git a/docs/reglas-deteccion.md b/docs/reglas-deteccion.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..24c1a8d[m
+[1m--- /dev/null[m
+[1m+++ b/docs/reglas-deteccion.md[m
+[36m@@ -0,0 +1,56 @@[m
+[32m+[m
+[32m+[m[32m# Catálogo de reglas de detección[m
+[32m+[m
+[32m+[m[32m## Propósito[m
+[32m+[m
+[32m+[m[32mDefinir las reglas que utilizará KhazadSec OT Sentinel para identificar[m
+[32m+[m[32mcondiciones de riesgo en los datos ficticios del laboratorio Erebor Energy.[m
+[32m+[m
+[32m+[m[32mLos hallazgos describen discrepancias con las condiciones definidas[m
+[32m+[m[32men el escenario. No constituyen evidencia de compromiso ni una auditoría[m
+[32m+[m[32mde una instalación real.[m
+[32m+[m
+[32m+[m[32m## R-01 — Comunicación no autorizada[m
+[32m+[m
+[32m+[m[32m- Fuente: `data/comunicaciones.csv`[m
+[32m+[m[32m- Condición: `estado=no_autorizada`[m
+[32m+[m[32m- Prioridad propuesta: alta[m
+[32m+[m[32m- Recomendación: revisar la necesidad de la comunicación y aplicar[m
+[32m+[m[32m  los controles de bloqueo previstos en el diseño.[m
+[32m+[m
+[32m+[m[32m## R-02 — Acceso OT no restringido[m
+[32m+[m
+[32m+[m[32m- Fuente: `data/inventario.csv`[m
+[32m+[m[32m- Condición: `zona=OT` y `acceso_restringido=no`[m
+[32m+[m[32m- Prioridad propuesta: alta[m
+[32m+[m[32m- Recomendación: revisar y documentar los controles de acceso previstos.[m
+[32m+[m
+[32m+[m[32m## R-03 — Política de actualizaciones no definida[m
+[32m+[m
+[32m+[m[32m- Fuente: `data/inventario.csv`[m
+[32m+[m[32m- Condición: `actualizaciones_definidas=no`[m
+[32m+[m[32m- Prioridad propuesta: media[m
+[32m+[m[32m- Recomendación: definir y documentar una política de gestión de[m
+[32m+[m[32m  actualizaciones adecuada al entorno.[m
+[32m+[m
+[32m+[m[32m## R-04 — Comunicación condicional sin control previsto[m
+[32m+[m
+[32m+[m[32m- Fuente: `data/comunicaciones.csv`[m
+[32m+[m[32m- Condición: `estado=condicional` y `control_previsto` vacío[m
+[32m+[m[32m- Prioridad propuesta: media[m
+[32m+[m[32m- Recomendación: documentar el control que debe hacer cumplir[m
+[32m+[m[32m  la condición de la comunicación.[m
+[32m+[m
+[32m+[m[32m## Resultados esperados con los datos de ejemplo[m
+[32m+[m
+[32m+[m[32m- R-01: `COM-06`[m
+[32m+[m[32m- R-02: `OT-04`[m
+[32m+[m[32m- R-03: `OT-01`, `OT-03` y `OT-04`[m
+[32m+[m[32m- R-04: ningún hallazgo[m
+[32m+[m
+[32m+[m[32m## Limitaciones[m
+[32m+[m
+[32m+[m[32mLas prioridades son decisiones iniciales del laboratorio. Los resultados[m
+[32m+[m[32mdependen de los datos de entrada y de las reglas implementadas.[m
+[32m+[m[32mEl analizador no verifica la configuración real de la red ni demuestra[m
+[32m+[m[32mque una comunicación haya sido observada.[m
