@@ -1,0 +1,76 @@
+
+import csv
+from pathlib import Path
+
+
+# Localizar la raíz del proyecto.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+# Rutas de los archivos de datos.
+INVENTORY_FILE = PROJECT_ROOT / "data" / "inventario.csv"
+COMMUNICATIONS_FILE = PROJECT_ROOT / "data" / "comunicaciones.csv"
+
+
+def load_csv(file_path):
+    """Leer un CSV y devolver sus filas como diccionarios."""
+    with file_path.open("r", encoding="utf-8-sig", newline="") as csv_file:
+        reader = csv.DictReader(csv_file)
+        return list(reader)
+
+
+def validate_communications(assets, communications):
+    """Comprobar que los origenes y destinos existen en el inventario."""
+    asset_ids = {asset["id"].strip() for asset in assets}
+    errors = []
+
+    for communication in communications:
+        communication_id = communication["id_comunicacion"].strip()
+        origin = communication["origen"].strip()
+        destination = communication["destino"].strip()
+
+        if not origin:
+            errors.append(
+                f"{communication_id}: falta el identificador de origen."
+            )
+        elif origin not in asset_ids:
+            errors.append(
+                f"{communication_id}: el origen '{origin}' no existe."
+            )
+
+        if not destination:
+            errors.append(
+                f"{communication_id}: falta el identificador de destino."
+            )
+        elif destination not in asset_ids:
+            errors.append(
+                f"{communication_id}: el destino '{destination}' no existe."
+            )
+
+    return errors
+
+
+def main():
+    """Punto de entrada del analizador."""
+    assets = load_csv(INVENTORY_FILE)
+    communications = load_csv(COMMUNICATIONS_FILE)
+
+    print(f"Activos cargados: {len(assets)}")
+    print(f"Comunicaciones cargadas: {len(communications)}")
+
+    for asset in assets:
+        print(f"{asset['id']} - {asset['nombre']}")
+
+    errors = validate_communications(assets, communications)
+
+    print("\nValidacion de comunicaciones:")
+
+    if errors:
+        for error in errors:
+            print(f"ERROR: {error}")
+        raise SystemExit(1)
+
+    print("Correcto: todos los origenes y destinos existen en el inventario.")
+
+
+if __name__ == "__main__":
+    main()
