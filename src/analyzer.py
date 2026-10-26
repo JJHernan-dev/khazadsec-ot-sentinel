@@ -129,6 +129,37 @@ def detect_undefined_update_policies(assets):
 
     return findings
 
+
+def detect_conditional_communications_without_controls(communications):
+    """Detectar comunicaciones condicionales sin control documentado."""
+    findings = []
+
+    for communication in communications:
+        status = communication["estado"].strip().lower()
+        control = communication["control_previsto"].strip()
+
+        if status == "condicional" and not control:
+            findings.append({
+                "regla": "R-04",
+                "activo_afectado": (
+                    communication["id_comunicacion"].strip()
+                ),
+                "prioridad": "Media",
+                "titulo": (
+                    "Comunicacion condicional sin control documentado"
+                ),
+                "evidencia": (
+                    f"estado={status}; control_previsto=vacío"
+                ),
+                "recomendacion": (
+                    "Documentar el control que debe hacer cumplir "
+                    "la condicion de acceso y definir como verificarlo."
+                ),
+            })
+
+    return findings
+
+
 def main():
     """Punto de entrada del analizador."""
     assets = load_csv(INVENTORY_FILE)
@@ -189,6 +220,25 @@ def main():
         print(f"  Activo: {finding['activo_afectado']}")
         print(f"  Evidencia: {finding['evidencia']}")
         print(f"  Recomendacion: {finding['recomendacion']}")
+
+
+    conditional_findings = (
+        detect_conditional_communications_without_controls(
+            communications
+        )
+    )
+
+    print(f"\nHallazgos R-04: {len(conditional_findings)}")
+
+    for finding in conditional_findings:
+        print(
+            f"[{finding['prioridad']}] "
+            f"{finding['regla']} - {finding['titulo']}"
+        )
+        print(f"  Comunicacion: {finding['activo_afectado']}")
+        print(f"  Evidencia: {finding['evidencia']}")
+        print(f"  Recomendacion: {finding['recomendacion']}")
+
 
 if __name__ == "__main__":
     main()
