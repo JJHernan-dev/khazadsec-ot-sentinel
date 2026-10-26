@@ -48,6 +48,31 @@ def validate_communications(assets, communications):
 
     return errors
 
+def detect_unauthorized_communications(communications):
+    """Detectar comunicaciones marcadas como no autorizadas."""
+    findings = []
+
+    for communication in communications:
+        status = communication["estado"].strip().lower()
+
+        if status == "no_autorizada":
+            findings.append({
+                "regla": "R-01",
+                "activo_afectado": communication["id_comunicacion"],
+                "prioridad": "Alta",
+                "titulo": "Comunicacion no autorizada",
+                "evidencia": (
+                    f"origen={communication['origen']}; "
+                    f"destino={communication['destino']}; "
+                    f"estado={status}"
+                ),
+                "recomendacion": (
+                    "Revisar la necesidad de la comunicacion y aplicar "
+                    "los controles de bloqueo previstos en el diseno."
+                ),
+            })
+
+    return findings
 
 def main():
     """Punto de entrada del analizador."""
@@ -70,6 +95,20 @@ def main():
         raise SystemExit(1)
 
     print("Correcto: todos los origenes y destinos existen en el inventario.")
+
+    findings = detect_unauthorized_communications(communications)
+
+    print(f"\nHallazgos detectados: {len(findings)}")
+
+    for finding in findings:
+        print(
+            f"[{finding['prioridad']}] "
+            f"{finding['regla']} - {finding['titulo']}"
+        )
+        print(f"  Elemento: {finding['activo_afectado']}")
+        print(f"  Evidencia: {finding['evidencia']}")
+        print(f"  Recomendacion: {finding['recomendacion']}")
+    
 
 
 if __name__ == "__main__":
