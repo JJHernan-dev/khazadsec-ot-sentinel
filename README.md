@@ -54,6 +54,20 @@ reports/hallazgos.csv
 
 El informe contiene identificadores de hallazgo, regla activada, elemento afectado, prioridad, evidencia de entrada y recomendación.
 
+## Pruebas automatizadas
+
+El proyecto incluye pruebas automatizadas con unittest, el framework de pruebas integrado en Python. No es necesario instalar dependencias adicionales.
+
+Para ejecutar las pruebas desde la raíz del repositorio:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+Las pruebas comprueban las cuatro reglas de detección, el comportamiento de R-04 cuando existe un control documentado, la validación de referencias entre activos y comunicaciones, y el resultado esperado del escenario de ejemplo.
+
+Con los datos actuales, la suite contiene siete pruebas y verifica que el escenario genera cinco hallazgos: uno de R-01, uno de R-02, tres de R-03 y ninguno de R-04.
+
 ## Resultado esperado
 
 Con los datos de ejemplo incluidos en el repositorio, la ejecución genera cinco hallazgos:

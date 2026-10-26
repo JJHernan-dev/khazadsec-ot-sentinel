@@ -1,11 +1,14 @@
-
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
 
 # Permite importar el analizador desde la carpeta src.
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT_DIR / "src"))
+
+import analyzer
 
 from analyzer import (
     validate_data,
@@ -156,6 +159,78 @@ class TestDetectionRules(unittest.TestCase):
         self.assertEqual(
             [finding["regla"] for finding in findings].count("R-04"), 0
         )
+        
+    
+    def test_validation_rejects_invalid_access_value(self):
+        assets = [{
+            "id": "OT-01",
+            "zona": "OT",
+            "acceso_restringido": "quizá",
+            "actualizaciones_definidas": "no",
+        }]
+        communications = []
+
+        errors = validate_data(assets, communications)
+
+        self.assertTrue(
+            any("acceso_restringido" in error for error in errors),
+            "La validación debería rechazar un valor de acceso inválido.",
+        )
+
+    def test_validation_rejects_invalid_communication_status(self):
+        assets = [{
+            "id": "OT-01",
+            "zona": "OT",
+            "acceso_restringido": "si",
+            "actualizaciones_definidas": "si",
+        }]
+        communications = [{
+            "id_comunicacion": "COM-01",
+            "origen": "OT-01",
+            "destino": "OT-01",
+            "estado": "desconocido",
+            "control_previsto": "",
+        }]
+
+        errors = validate_data(assets, communications)
+
+        self.assertTrue(
+            any("estado no válido" in error for error in errors),
+            "La validación debería rechazar un estado de comunicación inválido.",
+        )
+
+    
+
+    @patch("analyzer.REPORT_FILE")
+    @patch("analyzer.write_report")
+    @patch("analyzer.validate_data", return_value=["Error de prueba"])
+    @patch("analyzer.load_csv", return_value=[])
+    def test_main_does_not_write_report_when_validation_fails(
+        self,
+        mock_load_csv,
+        mock_validate_data,
+        mock_write_report,
+        mock_report_file,
+    ):
+        from contextlib import redirect_stdout
+        from io import StringIO
+
+        mock_report_file.exists.return_value = True
+        mock_report_file.relative_to.return_value = Path(
+            "reports/hallazgos.csv"
+        )
+
+        output = StringIO()
+
+        with redirect_stdout(output):
+            result = analyzer.main()
+
+        self.assertEqual(result, 1)
+        self.assertIn(
+            "no se ha actualizado el informe",
+            output.getvalue(),
+        )
+        mock_write_report.assert_not_called()
 
 if __name__ == "__main__":
     unittest.main()

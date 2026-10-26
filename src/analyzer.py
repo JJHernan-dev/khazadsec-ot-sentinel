@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 
+
 # Rutas del proyecto.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 INVENTORY_FILE = PROJECT_ROOT / "data" / "inventario.csv"
@@ -66,54 +67,123 @@ def load_csv(file_path, required_fields):
         return list(reader)
 
 
+
 def validate_data(assets, communications):
-    """Validar identificadores y referencias entre los dos CSV."""
+    """Validar campos, identificadores y referencias entre los CSV."""
     errors = []
 
-    asset_ids = [asset["id"].strip() for asset in assets]
+    def get_value(row, field):
+        """Obtener un valor como texto, incluso si la celda está vacía."""
+        return (row.get(field) or "").strip()
 
-    if any(not asset_id for asset_id in asset_ids):
-        errors.append("El inventario contiene un activo sin identificador.")
+    # Validar activos.
+    asset_ids = []
 
-    if len(asset_ids) != len(set(asset_ids)):
-        errors.append("El inventario contiene identificadores duplicados.")
+    for row_number, asset in enumerate(assets, start=2):
+        asset_id = get_value(asset, "id")
+        asset_ids.append(asset_id)
 
-    known_assets = {asset_id for asset_id in asset_ids if asset_id}
+        if not asset_id:
+            errors.append(
+                f"Inventario, fila {row_number}: falta el identificador."
+            )
 
-    communication_ids = [
-        communication["id_comunicacion"].strip()
-        for communication in communications
+        if not get_value(asset, "zona"):
+            errors.append(
+                f"Inventario, fila {row_number}: falta la zona."
+            )
+
+        restricted = get_value(
+            asset, "acceso_restringido"
+        ).lower()
+
+        if restricted not in {"si", "no"}:
+            errors.append(
+                f"Inventario, fila {row_number}: "
+                "acceso_restringido debe ser 'si' o 'no'."
+            )
+
+        update_policy = get_value(
+            asset, "actualizaciones_definidas"
+        ).lower()
+
+        if update_policy not in {"si", "no"}:
+            errors.append(
+                f"Inventario, fila {row_number}: "
+                "actualizaciones_definidas debe ser 'si' o 'no'."
+            )
+
+    non_empty_asset_ids = [
+        asset_id for asset_id in asset_ids if asset_id
     ]
 
-    if any(not communication_id for communication_id in communication_ids):
+    if len(non_empty_asset_ids) != len(set(non_empty_asset_ids)):
         errors.append(
-            "Hay comunicaciones sin identificador."
+            "El inventario contiene identificadores duplicados."
         )
 
-    if len(communication_ids) != len(set(communication_ids)):
+    known_assets = set(non_empty_asset_ids)
+
+    # Validar comunicaciones.
+    communication_ids = []
+
+    valid_statuses = {
+        "permitida",
+        "condicional",
+        "no_autorizada",
+    }
+
+    for row_number, communication in enumerate(
+        communications, start=2
+    ):
+        communication_id = get_value(
+            communication, "id_comunicacion"
+        )
+        communication_ids.append(communication_id)
+
+        if not communication_id:
+            errors.append(
+                f"Comunicaciones, fila {row_number}: "
+                "falta el identificador."
+            )
+
+        status = get_value(communication, "estado").lower()
+
+        if status not in valid_statuses:
+            errors.append(
+                f"Comunicaciones, fila {row_number}: "
+                f"estado no válido '{status or 'vacío'}'."
+            )
+
+        for field in ("origen", "destino"):
+            asset_id = get_value(communication, field)
+            label = communication_id or f"fila {row_number}"
+
+            if not asset_id:
+                errors.append(
+                    f"{label}: falta el campo {field}."
+                )
+            elif asset_id not in known_assets:
+                errors.append(
+                    f"{label}: el {field} '{asset_id}' "
+                    "no existe en el inventario."
+                )
+
+    non_empty_communication_ids = [
+        communication_id
+        for communication_id in communication_ids
+        if communication_id
+    ]
+
+    if len(non_empty_communication_ids) != len(
+        set(non_empty_communication_ids)
+    ):
         errors.append(
             "Hay identificadores de comunicación duplicados."
         )
 
-    for communication in communications:
-        communication_id = (
-            communication["id_comunicacion"].strip() or "(sin ID)"
-        )
-
-        for field in ("origen", "destino"):
-            asset_id = communication[field].strip()
-
-            if not asset_id:
-                errors.append(
-                    f"{communication_id}: falta el campo {field}."
-                )
-            elif asset_id not in known_assets:
-                errors.append(
-                    f"{communication_id}: el {field} "
-                    f"'{asset_id}' no existe en el inventario."
-                )
-
     return errors
+
 
 
 def make_finding(rule, asset, priority, title, evidence, recommendation):
@@ -268,6 +338,16 @@ def main():
             print("\nErrores de validacion:")
             for error in errors:
                 print(f"ERROR: {error}")
+
+            if REPORT_FILE.exists():
+                print(
+                    "\nAVISO: no se ha actualizado el informe. "
+                    "El archivo existente puede corresponder a una ejecucion anterior:"
+                )
+                print(REPORT_FILE.relative_to(PROJECT_ROOT))
+            else:
+                print("\nNo se ha generado ningun informe.")
+
             return 1
 
         print("Validacion de datos: correcta.")
