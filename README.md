@@ -63,10 +63,17 @@ Para ejecutar las pruebas desde la raíz del repositorio:
 ```powershell
 python -m unittest discover -s tests -v
 ```
+La suite contiene 12 pruebas que verifican:
 
-Las pruebas comprueban las cuatro reglas de detección, el comportamiento de R-04 cuando existe un control documentado, la validación de referencias entre activos y comunicaciones, y el resultado esperado del escenario de ejemplo.
+- La detección de las cuatro reglas (R-01 a R-04).
+- El comportamiento de R-04 cuando existe un control documentado.
+- La validación de los datos de entrada, incluidos valores inválidos, campos obligatorios y referencias a activos inexistentes.
+- La gestión de errores de validación sin sobrescribir el informe existente.
+- El resultado esperado del escenario de ejemplo.
 
-Con los datos actuales, la suite contiene siete pruebas y verifica que el escenario genera cinco hallazgos: uno de R-01, uno de R-02, tres de R-03 y ninguno de R-04.
+Con los datos ficticios actuales, el analizador genera cinco hallazgos: uno de R-01, uno de R-02 y tres de R-03. R-04 no genera hallazgos porque la comunicación condicional del escenario tiene un control documentado.
+
+Los resultados son comprobaciones basadas en las reglas definidas y en los datos de ejemplo; no constituyen evidencia de incidentes reales ni una auditoría de una instalación industrial.
 
 ## Resultado esperado
 
