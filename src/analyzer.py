@@ -48,6 +48,34 @@ def validate_communications(assets, communications):
 
     return errors
 
+
+def detect_unrestricted_ot_assets(assets):
+    """Detectar activos OT sin acceso restringido."""
+    findings = []
+
+    for asset in assets:
+        zone = asset["zona"].strip().upper()
+        restricted = asset["acceso_restringido"].strip().lower()
+
+        if zone == "OT" and restricted == "no":
+            findings.append({
+                "regla": "R-02",
+                "activo_afectado": asset["id"].strip(),
+                "prioridad": "Alta",
+                "titulo": "Activo OT sin acceso restringido",
+                "evidencia": (
+                    f"zona={zone}; "
+                    f"acceso_restringido={restricted}"
+                ),
+                "recomendacion": (
+                    "Revisar los controles de acceso del activo y "
+                    "documentar las restricciones necesarias."
+                ),
+            })
+
+    return findings
+
+
 def detect_unauthorized_communications(communications):
     """Detectar comunicaciones marcadas como no autorizadas."""
     findings = []
@@ -69,6 +97,33 @@ def detect_unauthorized_communications(communications):
                 "recomendacion": (
                     "Revisar la necesidad de la comunicacion y aplicar "
                     "los controles de bloqueo previstos en el diseno."
+                ),
+            })
+
+    return findings
+
+def detect_undefined_update_policies(assets):
+    """Detectar activos sin politica de actualizaciones definida."""
+    findings = []
+
+    for asset in assets:
+        update_policy = (
+            asset["actualizaciones_definidas"].strip().lower()
+        )
+
+        if update_policy == "no":
+            findings.append({
+                "regla": "R-03",
+                "activo_afectado": asset["id"].strip(),
+                "prioridad": "Media",
+                "titulo": "Politica de actualizaciones no definida",
+                "evidencia": (
+                    f"actualizaciones_definidas={update_policy}"
+                ),
+                "recomendacion": (
+                    "Definir y documentar una politica de gestion de "
+                    "actualizaciones adecuada para el activo, teniendo "
+                    "en cuenta las necesidades operativas de OT."
                 ),
             })
 
@@ -109,7 +164,31 @@ def main():
         print(f"  Evidencia: {finding['evidencia']}")
         print(f"  Recomendacion: {finding['recomendacion']}")
     
+    ot_findings = detect_unrestricted_ot_assets(assets)
 
+    print(f"\nHallazgos R-02: {len(ot_findings)}")
+
+    for finding in ot_findings:
+        print(
+            f"[{finding['prioridad']}] "
+            f"{finding['regla']} - {finding['titulo']}"
+        )
+        print(f"  Activo: {finding['activo_afectado']}")
+        print(f"  Evidencia: {finding['evidencia']}")
+        print(f"  Recomendacion: {finding['recomendacion']}")
+
+        update_findings = detect_undefined_update_policies(assets)
+
+    print(f"\nHallazgos R-03: {len(update_findings)}")
+
+    for finding in update_findings:
+        print(
+            f"[{finding['prioridad']}] "
+            f"{finding['regla']} - {finding['titulo']}"
+        )
+        print(f"  Activo: {finding['activo_afectado']}")
+        print(f"  Evidencia: {finding['evidencia']}")
+        print(f"  Recomendacion: {finding['recomendacion']}")
 
 if __name__ == "__main__":
     main()

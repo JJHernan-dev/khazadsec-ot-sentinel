@@ -14,6 +14,8 @@ basado en reglas explícitas para identificar condiciones de riesgo.
 Erebor Energy es una instalación ficticia creada exclusivamente para este proyecto.
 Los activos, las comunicaciones y sus propiedades son datos de ejemplo.
 
+<img src="img/diagrama_activos.png"/>
+
 ## Estructura
 
 - `data/`: inventario y comunicaciones en formato CSV.
