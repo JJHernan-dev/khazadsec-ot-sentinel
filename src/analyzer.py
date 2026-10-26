@@ -1,56 +1,162 @@
 
 import csv
+import sys
 from pathlib import Path
 
 
-# Localizar la raíz del proyecto.
+# Rutas del proyecto.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
-# Rutas de los archivos de datos.
 INVENTORY_FILE = PROJECT_ROOT / "data" / "inventario.csv"
 COMMUNICATIONS_FILE = PROJECT_ROOT / "data" / "comunicaciones.csv"
+REPORTS_DIR = PROJECT_ROOT / "reports"
+REPORT_FILE = REPORTS_DIR / "hallazgos.csv"
+
+# Prioridades y campos del informe.
+FINDING_FIELDS = [
+    "id_hallazgo",
+    "regla",
+    "activo_afectado",
+    "prioridad",
+    "titulo",
+    "evidencia",
+    "recomendacion",
+]
+
+INVENTORY_FIELDS = {
+    "id",
+    "nombre",
+    "zona",
+    "acceso_restringido",
+    "actualizaciones_definidas",
+}
+
+COMMUNICATION_FIELDS = {
+    "id_comunicacion",
+    "origen",
+    "destino",
+    "estado",
+    "control_previsto",
+}
 
 
-def load_csv(file_path):
-    """Leer un CSV y devolver sus filas como diccionarios."""
-    with file_path.open("r", encoding="utf-8-sig", newline="") as csv_file:
+def load_csv(file_path, required_fields):
+    """Leer un CSV y comprobar que contiene las columnas requeridas."""
+    if not file_path.is_file():
+        raise ValueError(f"No se encuentra el archivo: {file_path}")
+
+    with file_path.open(
+        "r", encoding="utf-8-sig", newline=""
+    ) as csv_file:
         reader = csv.DictReader(csv_file)
+
+        if reader.fieldnames is None:
+            raise ValueError(f"El CSV está vacío: {file_path.name}")
+
+        headers = {
+            header.strip() for header in reader.fieldnames if header
+        }
+        missing = required_fields - headers
+
+        if missing:
+            raise ValueError(
+                f"{file_path.name}: faltan columnas: "
+                f"{', '.join(sorted(missing))}"
+            )
+
         return list(reader)
 
 
-def validate_communications(assets, communications):
-    """Comprobar que los origenes y destinos existen en el inventario."""
-    asset_ids = {asset["id"].strip() for asset in assets}
+def validate_data(assets, communications):
+    """Validar identificadores y referencias entre los dos CSV."""
     errors = []
 
+    asset_ids = [asset["id"].strip() for asset in assets]
+
+    if any(not asset_id for asset_id in asset_ids):
+        errors.append("El inventario contiene un activo sin identificador.")
+
+    if len(asset_ids) != len(set(asset_ids)):
+        errors.append("El inventario contiene identificadores duplicados.")
+
+    known_assets = {asset_id for asset_id in asset_ids if asset_id}
+
+    communication_ids = [
+        communication["id_comunicacion"].strip()
+        for communication in communications
+    ]
+
+    if any(not communication_id for communication_id in communication_ids):
+        errors.append(
+            "Hay comunicaciones sin identificador."
+        )
+
+    if len(communication_ids) != len(set(communication_ids)):
+        errors.append(
+            "Hay identificadores de comunicación duplicados."
+        )
+
     for communication in communications:
-        communication_id = communication["id_comunicacion"].strip()
-        origin = communication["origen"].strip()
-        destination = communication["destino"].strip()
+        communication_id = (
+            communication["id_comunicacion"].strip() or "(sin ID)"
+        )
 
-        if not origin:
-            errors.append(
-                f"{communication_id}: falta el identificador de origen."
-            )
-        elif origin not in asset_ids:
-            errors.append(
-                f"{communication_id}: el origen '{origin}' no existe."
-            )
+        for field in ("origen", "destino"):
+            asset_id = communication[field].strip()
 
-        if not destination:
-            errors.append(
-                f"{communication_id}: falta el identificador de destino."
-            )
-        elif destination not in asset_ids:
-            errors.append(
-                f"{communication_id}: el destino '{destination}' no existe."
-            )
+            if not asset_id:
+                errors.append(
+                    f"{communication_id}: falta el campo {field}."
+                )
+            elif asset_id not in known_assets:
+                errors.append(
+                    f"{communication_id}: el {field} "
+                    f"'{asset_id}' no existe en el inventario."
+                )
 
     return errors
 
 
+def make_finding(rule, asset, priority, title, evidence, recommendation):
+    """Crear un hallazgo con el formato común del informe."""
+    return {
+        "regla": rule,
+        "activo_afectado": asset,
+        "prioridad": priority,
+        "titulo": title,
+        "evidencia": evidence,
+        "recomendacion": recommendation,
+    }
+
+
+def detect_unauthorized_communications(communications):
+    """R-01: detectar comunicaciones marcadas como no autorizadas."""
+    findings = []
+
+    for communication in communications:
+        status = communication["estado"].strip().lower()
+
+        if status == "no_autorizada":
+            findings.append(make_finding(
+                "R-01",
+                communication["id_comunicacion"].strip(),
+                "Alta",
+                "Comunicacion no autorizada",
+                (
+                    f"origen={communication['origen'].strip()}; "
+                    f"destino={communication['destino'].strip()}; "
+                    f"estado={status}"
+                ),
+                (
+                    "Revisar la necesidad de la comunicacion y aplicar "
+                    "los controles de bloqueo previstos en el diseno."
+                ),
+            ))
+
+    return findings
+
+
 def detect_unrestricted_ot_assets(assets):
-    """Detectar activos OT sin acceso restringido."""
+    """R-02: detectar activos OT sin acceso restringido."""
     findings = []
 
     for asset in assets:
@@ -58,80 +164,47 @@ def detect_unrestricted_ot_assets(assets):
         restricted = asset["acceso_restringido"].strip().lower()
 
         if zone == "OT" and restricted == "no":
-            findings.append({
-                "regla": "R-02",
-                "activo_afectado": asset["id"].strip(),
-                "prioridad": "Alta",
-                "titulo": "Activo OT sin acceso restringido",
-                "evidencia": (
-                    f"zona={zone}; "
-                    f"acceso_restringido={restricted}"
-                ),
-                "recomendacion": (
+            findings.append(make_finding(
+                "R-02",
+                asset["id"].strip(),
+                "Alta",
+                "Activo OT sin acceso restringido",
+                f"zona={zone}; acceso_restringido={restricted}",
+                (
                     "Revisar los controles de acceso del activo y "
                     "documentar las restricciones necesarias."
                 ),
-            })
+            ))
 
     return findings
 
-
-def detect_unauthorized_communications(communications):
-    """Detectar comunicaciones marcadas como no autorizadas."""
-    findings = []
-
-    for communication in communications:
-        status = communication["estado"].strip().lower()
-
-        if status == "no_autorizada":
-            findings.append({
-                "regla": "R-01",
-                "activo_afectado": communication["id_comunicacion"],
-                "prioridad": "Alta",
-                "titulo": "Comunicacion no autorizada",
-                "evidencia": (
-                    f"origen={communication['origen']}; "
-                    f"destino={communication['destino']}; "
-                    f"estado={status}"
-                ),
-                "recomendacion": (
-                    "Revisar la necesidad de la comunicacion y aplicar "
-                    "los controles de bloqueo previstos en el diseno."
-                ),
-            })
-
-    return findings
 
 def detect_undefined_update_policies(assets):
-    """Detectar activos sin politica de actualizaciones definida."""
+    """R-03: detectar activos sin politica de actualizaciones definida."""
     findings = []
 
     for asset in assets:
-        update_policy = (
-            asset["actualizaciones_definidas"].strip().lower()
-        )
+        policy = asset["actualizaciones_definidas"].strip().lower()
 
-        if update_policy == "no":
-            findings.append({
-                "regla": "R-03",
-                "activo_afectado": asset["id"].strip(),
-                "prioridad": "Media",
-                "titulo": "Politica de actualizaciones no definida",
-                "evidencia": (
-                    f"actualizaciones_definidas={update_policy}"
-                ),
-                "recomendacion": (
+        if policy == "no":
+            findings.append(make_finding(
+                "R-03",
+                asset["id"].strip(),
+                "Media",
+                "Politica de actualizaciones no definida",
+                f"actualizaciones_definidas={policy}",
+                (
                     "Definir y documentar una politica de gestion de "
                     "actualizaciones adecuada para el activo, teniendo "
                     "en cuenta las necesidades operativas de OT."
                 ),
-            })
+            ))
 
     return findings
 
 
 def detect_conditional_communications_without_controls(communications):
-    """Detectar comunicaciones condicionales sin control documentado."""
+    """R-04: detectar comunicaciones condicionales sin control documentado."""
     findings = []
 
     for communication in communications:
@@ -139,106 +212,99 @@ def detect_conditional_communications_without_controls(communications):
         control = communication["control_previsto"].strip()
 
         if status == "condicional" and not control:
-            findings.append({
-                "regla": "R-04",
-                "activo_afectado": (
-                    communication["id_comunicacion"].strip()
-                ),
-                "prioridad": "Media",
-                "titulo": (
-                    "Comunicacion condicional sin control documentado"
-                ),
-                "evidencia": (
-                    f"estado={status}; control_previsto=vacío"
-                ),
-                "recomendacion": (
+            findings.append(make_finding(
+                "R-04",
+                communication["id_comunicacion"].strip(),
+                "Media",
+                "Comunicacion condicional sin control documentado",
+                f"estado={status}; control_previsto=vacío",
+                (
                     "Documentar el control que debe hacer cumplir "
                     "la condicion de acceso y definir como verificarlo."
                 ),
-            })
+            ))
 
     return findings
 
 
+def assign_finding_ids(findings):
+    """Asignar identificadores secuenciales a los hallazgos."""
+    for number, finding in enumerate(findings, start=1):
+        finding["id_hallazgo"] = f"H-{number:03d}"
+
+    return findings
+
+
+def write_report(findings):
+    """Guardar los hallazgos en un CSV."""
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    with REPORT_FILE.open(
+        "w", encoding="utf-8-sig", newline=""
+    ) as csv_file:
+        writer = csv.DictWriter(
+            csv_file,
+            fieldnames=FINDING_FIELDS,
+            extrasaction="ignore",
+        )
+        writer.writeheader()
+        writer.writerows(findings)
+
+
 def main():
-    """Punto de entrada del analizador."""
-    assets = load_csv(INVENTORY_FILE)
-    communications = load_csv(COMMUNICATIONS_FILE)
-
-    print(f"Activos cargados: {len(assets)}")
-    print(f"Comunicaciones cargadas: {len(communications)}")
-
-    for asset in assets:
-        print(f"{asset['id']} - {asset['nombre']}")
-
-    errors = validate_communications(assets, communications)
-
-    print("\nValidacion de comunicaciones:")
-
-    if errors:
-        for error in errors:
-            print(f"ERROR: {error}")
-        raise SystemExit(1)
-
-    print("Correcto: todos los origenes y destinos existen en el inventario.")
-
-    findings = detect_unauthorized_communications(communications)
-
-    print(f"\nHallazgos detectados: {len(findings)}")
-
-    for finding in findings:
-        print(
-            f"[{finding['prioridad']}] "
-            f"{finding['regla']} - {finding['titulo']}"
+    """Cargar datos, validar, detectar y generar el informe."""
+    try:
+        assets = load_csv(INVENTORY_FILE, INVENTORY_FIELDS)
+        communications = load_csv(
+            COMMUNICATIONS_FILE, COMMUNICATION_FIELDS
         )
-        print(f"  Elemento: {finding['activo_afectado']}")
-        print(f"  Evidencia: {finding['evidencia']}")
-        print(f"  Recomendacion: {finding['recomendacion']}")
-    
-    ot_findings = detect_unrestricted_ot_assets(assets)
 
-    print(f"\nHallazgos R-02: {len(ot_findings)}")
+        print(f"Activos cargados: {len(assets)}")
+        print(f"Comunicaciones cargadas: {len(communications)}")
 
-    for finding in ot_findings:
-        print(
-            f"[{finding['prioridad']}] "
-            f"{finding['regla']} - {finding['titulo']}"
+        errors = validate_data(assets, communications)
+
+        if errors:
+            print("\nErrores de validacion:")
+            for error in errors:
+                print(f"ERROR: {error}")
+            return 1
+
+        print("Validacion de datos: correcta.")
+
+        findings = []
+        findings.extend(
+            detect_unauthorized_communications(communications)
         )
-        print(f"  Activo: {finding['activo_afectado']}")
-        print(f"  Evidencia: {finding['evidencia']}")
-        print(f"  Recomendacion: {finding['recomendacion']}")
-
-        update_findings = detect_undefined_update_policies(assets)
-
-    print(f"\nHallazgos R-03: {len(update_findings)}")
-
-    for finding in update_findings:
-        print(
-            f"[{finding['prioridad']}] "
-            f"{finding['regla']} - {finding['titulo']}"
+        findings.extend(detect_unrestricted_ot_assets(assets))
+        findings.extend(detect_undefined_update_policies(assets))
+        findings.extend(
+            detect_conditional_communications_without_controls(
+                communications
+            )
         )
-        print(f"  Activo: {finding['activo_afectado']}")
-        print(f"  Evidencia: {finding['evidencia']}")
-        print(f"  Recomendacion: {finding['recomendacion']}")
 
+        assign_finding_ids(findings)
+        write_report(findings)
 
-    conditional_findings = (
-        detect_conditional_communications_without_controls(
-            communications
-        )
-    )
+        print(f"\nTotal de hallazgos: {len(findings)}")
 
-    print(f"\nHallazgos R-04: {len(conditional_findings)}")
+        for finding in findings:
+            print(
+                f"[{finding['prioridad']}] "
+                f"{finding['id_hallazgo']} "
+                f"{finding['regla']} - {finding['titulo']}"
+            )
+            print(f"  Elemento: {finding['activo_afectado']}")
+            print(f"  Evidencia: {finding['evidencia']}")
 
-    for finding in conditional_findings:
-        print(
-            f"[{finding['prioridad']}] "
-            f"{finding['regla']} - {finding['titulo']}"
-        )
-        print(f"  Comunicacion: {finding['activo_afectado']}")
-        print(f"  Evidencia: {finding['evidencia']}")
-        print(f"  Recomendacion: {finding['recomendacion']}")
+        print(f"\nInforme generado: {REPORT_FILE.relative_to(PROJECT_ROOT)}")
+        return 0
+
+    except (OSError, ValueError, KeyError) as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
