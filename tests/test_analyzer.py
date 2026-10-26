@@ -200,7 +200,6 @@ class TestDetectionRules(unittest.TestCase):
         )
 
     
-
     @patch("analyzer.REPORT_FILE")
     @patch("analyzer.write_report")
     @patch("analyzer.validate_data", return_value=["Error de prueba"])
@@ -231,6 +230,49 @@ class TestDetectionRules(unittest.TestCase):
             output.getvalue(),
         )
         mock_write_report.assert_not_called()
+        
+    def test_validation_rejects_missing_asset_zone(self):
+        assets = [{
+            "id": "OT-01",
+            "zona": "",
+            "acceso_restringido": "si",
+            "actualizaciones_definidas": "si",
+        }]
+        communications = []
+
+        errors = validate_data(assets, communications)
+
+        self.assertTrue(
+            any("falta la zona" in error for error in errors),
+            "La validación debería rechazar un activo sin zona.",
+        )
+
+    def test_validation_rejects_missing_communication_origin(self):
+        assets = [
+            {
+                "id": "OT-01",
+                "zona": "OT",
+                "acceso_restringido": "si",
+                "actualizaciones_definidas": "si",
+            }
+        ]
+        communications = [
+            {
+                "id_comunicacion": "COM-01",
+                "origen": "",
+                "destino": "OT-01",
+                "estado": "permitida",
+                "control_previsto": "Comunicación de prueba",
+            }
+        ]
+
+        errors = validate_data(assets, communications)
+
+        self.assertTrue(
+            any("origen" in error.lower() for error in errors),
+            "La validación debería rechazar una comunicación sin origen.",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
