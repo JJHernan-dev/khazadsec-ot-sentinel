@@ -80,13 +80,13 @@ Los resultados son comprobaciones basadas en las reglas definidas y en los datos
 
 El analizador valida los datos de entrada, ejecuta las cuatro reglas de detección y genera un informe CSV con los hallazgos identificados en el escenario ficticio.
 
-<img src="img/demo-analizador.JPG"/>
+<img src="img/demo-analizador.jpg"/>
 
 ### Ejecución de las pruebas automatizadas
 
 La suite de pruebas comprueba las reglas de detección, la validación de los datos y el comportamiento esperado del analizador.
 
-<img src="img/demo-pruebas.JPG">
+<img src="img/demo-pruebas.jpg">
 
 
 
