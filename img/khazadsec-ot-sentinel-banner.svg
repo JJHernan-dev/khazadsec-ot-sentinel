@@ -1,192 +1,297 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" width="1280" height="360" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 380" width="1280" height="380" role="img" aria-labelledby="t d">
   <title id="t">KhazadSec OT Sentinel</title>
-  <desc id="d">Banner animado del laboratorio de ciberseguridad industrial KhazadSec OT Sentinel con la arquitectura IT/OT de Erebor Energy</desc>
+  <desc id="d">Banner animado de KhazadSec OT Sentinel, laboratorio didáctico de ciberseguridad industrial, con la topología IT/OT de Erebor Energy</desc>
 
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0a0e16"/>
-      <stop offset="1" stop-color="#171d2e"/>
+      <stop offset="0" stop-color="#050b16"/>
+      <stop offset="0.55" stop-color="#0a1830"/>
+      <stop offset="1" stop-color="#0a2236"/>
     </linearGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-      <stop offset="0" stop-color="#b8862b"/>
-      <stop offset="0.35" stop-color="#f6d77a"/>
-      <stop offset="0.5" stop-color="#fff2b8"/>
-      <stop offset="0.65" stop-color="#f6d77a"/>
-      <stop offset="1" stop-color="#b8862b"/>
-      <animateTransform attributeName="gradientTransform" type="translate" values="-0.6 0; 0.6 0; -0.6 0" dur="6s" repeatCount="indefinite"/>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f4d72"/>
+      <stop offset="1" stop-color="#0a1a2e"/>
     </linearGradient>
-    <linearGradient id="fw" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ff9d3c"/>
-      <stop offset="1" stop-color="#c2410c"/>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e8f6ff"/>
+      <stop offset="0.42" stop-color="#ffffff"/>
+      <stop offset="0.5" stop-color="#8fd3ff"/>
+      <stop offset="0.58" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e8f6ff"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-0.7 0; 0.7 0; -0.7 0" dur="7s" repeatCount="indefinite"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#7fe8ff"/>
+      <stop offset="1" stop-color="#2dd4bf" stop-opacity="0"/>
+      <animateTransform attributeName="gradientTransform" type="translate" values="-1 0; 1 0" dur="6s" repeatCount="indefinite"/>
     </linearGradient>
     <linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#5eead4" stop-opacity="0"/>
-      <stop offset="1" stop-color="#5eead4" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#5eead4" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="fwg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a1d16"/>
+      <stop offset="1" stop-color="#2a0f0d"/>
     </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+      <path d="M40 0H0V40" fill="none" stroke="#7fb5dc" stroke-opacity="0.05" stroke-width="1"/>
     </pattern>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur stdDeviation="3" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <clipPath id="frame"><rect width="1280" height="360" rx="14"/></clipPath>
+    <clipPath id="frame"><rect width="1280" height="380" rx="14"/></clipPath>
   </defs>
 
-  <g clip-path="url(#frame)">
-    <!-- Fondo -->
-    <rect width="1280" height="360" fill="url(#bg)"/>
-    <rect width="1280" height="360" fill="url(#grid)"/>
-    <circle cx="1000" cy="180" r="320" fill="#f6d77a" opacity="0.04"/>
+  <g clip-path="url(#frame)" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif">
 
-    <!-- Brasas flotantes -->
-    <g fill="#f6d77a" filter="url(#glow)">
-      <circle cx="120" cy="340" r="2"><animate attributeName="cy" values="350;-10" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="9s" repeatCount="indefinite"/></circle>
-      <circle cx="300" cy="350" r="1.5"><animate attributeName="cy" values="350;-10" dur="11s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="11s" begin="2s" repeatCount="indefinite"/></circle>
-      <circle cx="480" cy="350" r="2.2"><animate attributeName="cy" values="350;-10" dur="8s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0" dur="8s" begin="1s" repeatCount="indefinite"/></circle>
-      <circle cx="610" cy="350" r="1.6"><animate attributeName="cy" values="350;-10" dur="12s" begin="4s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.7;0" dur="12s" begin="4s" repeatCount="indefinite"/></circle>
-      <circle cx="220" cy="350" r="1.4"><animate attributeName="cy" values="350;-10" dur="10s" begin="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.7;0" dur="10s" begin="6s" repeatCount="indefinite"/></circle>
+    <!-- ===== Fondo ===== -->
+    <rect width="1280" height="380" fill="url(#bg)"/>
+    <rect width="1280" height="380" fill="url(#grid)"/>
+    <path d="M0 292 Q320 258 640 290 T1280 282 V380 H0 Z" fill="#0c2a44" opacity="0.35"/>
+    <path d="M0 312 Q360 284 700 310 T1280 304 V380 H0 Z" fill="#0c2a44" opacity="0.3"/>
+
+    <!-- Motas de luz -->
+    <g fill="#7fe8ff" filter="url(#glow)">
+      <circle cx="90" cy="330" r="1.6"><animate attributeName="cy" values="340;40" dur="12s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.8;0" dur="12s" repeatCount="indefinite"/></circle>
+      <circle cx="250" cy="340" r="1.3"><animate attributeName="cy" values="340;40" dur="15s" begin="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.7;0" dur="15s" begin="3s" repeatCount="indefinite"/></circle>
+      <circle cx="450" cy="340" r="1.4"><animate attributeName="cy" values="340;40" dur="13s" begin="6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.6;0" dur="13s" begin="6s" repeatCount="indefinite"/></circle>
+      <circle cx="690" cy="340" r="1.5"><animate attributeName="cy" values="340;40" dur="14s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.6;0" dur="14s" begin="1s" repeatCount="indefinite"/></circle>
     </g>
 
-    <!-- ===== Texto izquierdo ===== -->
-    <!-- Logo hexagonal -->
-    <g>
-      <polygon points="76,42 93,52 93,72 76,82 59,72 59,52" fill="#0a0e16" stroke="#f6d77a" stroke-width="2" filter="url(#glow)">
-        <animate attributeName="stroke-opacity" values="1;0.45;1" dur="3s" repeatCount="indefinite"/>
-      </polygon>
-      <text x="76" y="68" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#f6d77a">K</text>
+    <!-- ===== Emblema: monte Erebor ===== -->
+    <g transform="translate(0 20)">
+      <circle cx="151" cy="140" r="118" fill="url(#halo)"/>
+      <circle cx="151" cy="140" r="104" fill="none" stroke="#38bdf8" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="3 9">
+        <animateTransform attributeName="transform" type="rotate" from="0 151 140" to="360 151 140" dur="50s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Montaña -->
+      <path d="M56 212 L110 130 L126 144 L150 66 L174 124 L192 110 L246 212 Z" fill="url(#mt)" stroke="#4aa3d6" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M150 66 L138 106 L146 100 L151 110 L158 101 L167 108 Z" fill="#cdeeff" opacity="0.92"/>
+
+      <!-- Veta de datos -->
+      <path d="M88 212 L116 172 L136 190 L158 150 L180 184 L198 168 L214 212" fill="none" stroke="#2dd4bf" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.9"/>
+      <path d="M88 212 L116 172 L136 190 L158 150 L180 184 L198 168 L214 212" fill="none" stroke="#c8fff4" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" pathLength="100" stroke-dasharray="10 90" filter="url(#glow)">
+        <animate attributeName="stroke-dashoffset" from="100" to="0" dur="4s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- Puerta de la forja -->
+      <path d="M141 212 V197 Q150 185 159 197 V212 Z" fill="#ff9d3c" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.55;1;0.7;1;0.55" keyTimes="0;0.25;0.5;0.75;1" dur="2.6s" repeatCount="indefinite"/>
+      </path>
+
+      <!-- Faro de la cima -->
+      <circle cx="150" cy="64" r="4" fill="none" stroke="#7fe8ff" stroke-width="1.5">
+        <animate attributeName="r" values="4;22" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;0" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="150" cy="64" r="3.6" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <text x="110" y="67" font-family="Consolas, 'SFMono-Regular', 'Courier New', monospace" font-size="15" letter-spacing="3" fill="#5eead4" opacity="0">
-      OT SENTINEL LAB  ·  EREBOR ENERGY
-      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.2s" fill="freeze"/>
-    </text>
 
-    <text x="58" y="150" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="72" font-weight="800" fill="url(#gold)" opacity="0">
-      KhazadSec
-      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.4s" fill="freeze"/>
-      <animateTransform attributeName="transform" type="translate" from="-30 0" to="0 0" dur="1s" begin="0.4s" fill="freeze"/>
-    </text>
-    <text x="58" y="218" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="700" fill="#e6edf3" opacity="0">
-      OT Sentinel
-      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.8s" fill="freeze"/>
-      <animateTransform attributeName="transform" type="translate" from="-30 0" to="0 0" dur="1s" begin="0.8s" fill="freeze"/>
-    </text>
-
-    <rect x="58" y="238" width="0" height="3" rx="1.5" fill="#f6d77a">
-      <animate attributeName="width" from="0" to="120" dur="1s" begin="1.2s" fill="freeze"/>
+    <!-- ===== Texto ===== -->
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="0.2s" fill="freeze"/>
+      <text x="300" y="104" font-size="19" font-weight="700" fill="#38bdf8" textLength="172" lengthAdjust="spacing">KHAZADSEC</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.9s" begin="0.4s" fill="freeze"/>
+      <animateTransform attributeName="transform" type="translate" from="-24 0" to="0 0" dur="0.9s" begin="0.4s" fill="freeze"/>
+      <text x="298" y="170" font-size="60" font-weight="800" fill="url(#title)" textLength="420" lengthAdjust="spacing">OT SENTINEL</text>
+    </g>
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="0.8s" fill="freeze"/>
+      <text x="300" y="206" font-size="15.5" fill="#86b0d0" textLength="384" lengthAdjust="spacing">INDUSTRIAL CYBERSECURITY LAB</text>
+    </g>
+    <rect x="300" y="222" width="0" height="2.5" rx="1.2" fill="url(#rule)">
+      <animate attributeName="width" from="0" to="340" dur="1s" begin="1s" fill="freeze"/>
     </rect>
-
-    <text x="58" y="275" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#9fb0c3" opacity="0">
-      Análisis de riesgo sobre inventarios de activos industriales IT/OT
-      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="1.4s" fill="freeze"/>
-    </text>
+    <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1.2s" fill="freeze"/>
+      <text x="300" y="253" font-size="16" fill="#d4e6f6" textLength="410" lengthAdjust="spacing">Inventario · Segmentación IT/OT · Análisis de riesgos</text>
+    </g>
 
     <!-- Chips -->
-    <g font-family="Consolas, 'SFMono-Regular', 'Courier New', monospace" font-size="14" text-anchor="middle" opacity="0">
-      <animate attributeName="opacity" from="0" to="1" dur="1s" begin="1.8s" fill="freeze"/>
-      <rect x="58" y="298" width="86" height="28" rx="14" fill="none" stroke="#f6d77a" stroke-opacity="0.6"/>
-      <text x="101" y="317" fill="#f6d77a">Python</text>
-      <rect x="154" y="298" width="64" height="28" rx="14" fill="none" stroke="#5eead4" stroke-opacity="0.6"/>
-      <text x="186" y="317" fill="#5eead4">CSV</text>
-      <rect x="228" y="298" width="100" height="28" rx="14" fill="none" stroke="#9fb0c3" stroke-opacity="0.6"/>
-      <text x="278" y="317" fill="#9fb0c3">Markdown</text>
-      <rect x="338" y="298" width="140" height="28" rx="14" fill="none" stroke="#ff9d3c" stroke-opacity="0.6"/>
-      <text x="408" y="317" fill="#ff9d3c">Ciber IT/OT</text>
+    <g opacity="0" font-size="12" font-weight="700">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1.5s" fill="freeze"/>
+      <rect x="300" y="274" width="160" height="30" rx="15" fill="#0c2a3c" stroke="#2dd4bf" stroke-opacity="0.65"/>
+      <circle cx="318" cy="289" r="3.5" fill="#2dd4bf">
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="330" y="293.5" fill="#bdf5ea" letter-spacing="1.6">LAB DIDÁCTICO</text>
+      <rect x="472" y="274" width="92" height="30" rx="15" fill="#0c2236" stroke="#38bdf8" stroke-opacity="0.55"/>
+      <text x="518" y="293.5" fill="#a9dcff" text-anchor="middle" letter-spacing="1.6">PYTHON</text>
+      <rect x="576" y="274" width="108" height="30" rx="15" fill="#0c2236" stroke="#7fb5dc" stroke-opacity="0.45"/>
+      <text x="630" y="293.5" fill="#bcd3e6" text-anchor="middle" letter-spacing="1.6">CSV → MD</text>
     </g>
 
-    <!-- ===== Diagrama IT / OT ===== -->
+    <!-- ===== Topología de laboratorio ===== -->
+    <text x="740" y="52" font-size="11.5" font-weight="700" letter-spacing="3" fill="#7fb5dc">TOPOLOGÍA DE LABORATORIO</text>
+    <rect x="740" y="58" width="36" height="2" rx="1" fill="#38bdf8" opacity="0.7"/>
+
+    <!-- Zonas -->
+    <rect x="740" y="70" width="190" height="225" rx="12" fill="#0c2a4a" fill-opacity="0.45" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1.4"/>
+    <text x="760" y="94" font-size="12.5" font-weight="800" letter-spacing="2" fill="#5cc8ff">ZONA IT</text>
+    <rect x="960" y="70" width="285" height="225" rx="12" fill="#0b3a3a" fill-opacity="0.42" stroke="#2dd4bf" stroke-opacity="0.55" stroke-width="1.4"/>
+    <text x="980" y="94" font-size="12.5" font-weight="800" letter-spacing="2" fill="#3ee0c5">ZONA OT</text>
+
+    <!-- Enlaces -->
+    <g fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M835 156 V190" stroke="#38bdf8" stroke-opacity="0.8" stroke-dasharray="4 4">
+        <animate attributeName="stroke-dashoffset" from="16" to="0" dur="1.2s" repeatCount="indefinite"/>
+      </path>
+      <path d="M855 212 H945" stroke="#2dd4bf" stroke-opacity="0.8"/>
+      <path d="M945 130 V254" stroke="#2dd4bf" stroke-opacity="0.8"/>
+      <path d="M945 130 H978 M945 192 H978 M945 254 H978" stroke="#2dd4bf" stroke-opacity="0.8"/>
+      <path d="M1090 130 H1120 M1090 192 H1120" stroke="#2dd4bf" stroke-opacity="0.8"/>
+    </g>
+
+    <!-- Paquetes permitidos -->
+    <g filter="url(#glow)">
+      <circle r="4.5" fill="#7fe8ff" opacity="0">
+        <animateMotion dur="4.5s" begin="0.8s" repeatCount="indefinite" path="M835 156 V212 H945 V130 H978"/>
+        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.06;0.5;0.94;1" dur="4.5s" begin="0.8s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="4.5" fill="#5eead4" opacity="0">
+        <animateMotion dur="4.5s" begin="3s" repeatCount="indefinite" path="M835 156 V212 H945 V192 H978"/>
+        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.06;0.5;0.94;1" dur="4.5s" begin="3s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="3.6" fill="#5eead4" opacity="0">
+        <animateMotion dur="1.6s" begin="2.2s" repeatCount="indefinite" path="M1090 130 H1120"/>
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.8;1" dur="1.6s" begin="2.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="3.6" fill="#5eead4" opacity="0">
+        <animateMotion dur="1.6s" begin="3.4s" repeatCount="indefinite" path="M1090 192 H1120"/>
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.15;0.8;1" dur="1.6s" begin="3.4s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- Paquete bloqueado -->
+    <circle r="4.5" fill="#ff5a47" filter="url(#glow)" opacity="0">
+      <animateMotion dur="3.2s" begin="1.2s" repeatCount="indefinite" path="M750 212 H806"/>
+      <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.1;0.7;0.78;1" dur="3.2s" begin="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <g stroke="#ff5a47" stroke-width="2.4" stroke-linecap="round" opacity="0">
+      <path d="M801 206 L813 218 M813 206 L801 218"/>
+      <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.62;0.75;0.92;1" dur="3.2s" begin="1.2s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- IT-01 -->
     <g>
-      <!-- Zona IT -->
-      <rect x="690" y="52" width="150" height="256" rx="10" fill="#38bdf8" fill-opacity="0.05" stroke="#38bdf8" stroke-opacity="0.55" stroke-dasharray="6 5"/>
-      <text x="765" y="74" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="13" letter-spacing="2" fill="#38bdf8">ZONA IT</text>
-
-      <!-- Zona OT -->
-      <rect x="900" y="52" width="340" height="256" rx="10" fill="#f6d77a" fill-opacity="0.04" stroke="#f6d77a" stroke-opacity="0.55" stroke-dasharray="6 5"/>
-      <text x="1070" y="74" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="13" letter-spacing="2" fill="#f6d77a">ZONA OT</text>
-
-      <!-- Enlaces -->
-      <g fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M820 180 H856" stroke="#38bdf8" stroke-opacity="0.7"/>
-        <path d="M884 180 H910 V130 H940" stroke="#f6d77a" stroke-opacity="0.6"/>
-        <path d="M1040 130 H1100" stroke="#f6d77a" stroke-opacity="0.6"/>
-        <path d="M990 150 V215" stroke="#f6d77a" stroke-opacity="0.6"/>
-        <path d="M1040 235 H1100" stroke="#f6d77a" stroke-opacity="0.6"/>
+      <rect x="762" y="108" width="146" height="48" rx="8" fill="#0d2a4c" stroke="#38bdf8" stroke-opacity="0.75" stroke-width="1.3"/>
+      <g fill="none" stroke="#7fd0ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="774" y="120" width="19" height="14" rx="2"/>
+        <path d="M783.500 134 V139 M778 139 H789"/>
       </g>
-
-      <!-- Nodo Admin IT -->
-      <g font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle">
-        <rect x="710" y="160" width="110" height="40" rx="8" fill="#0f1a2b" stroke="#38bdf8"/>
-        <text x="765" y="185" fill="#bae6fd">Admin IT</text>
-
-        <!-- SCADA -->
-        <rect x="940" y="110" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
-        <text x="990" y="135" fill="#fde9a8">SCADA</text>
-
-        <!-- HMI -->
-        <rect x="1100" y="110" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
-        <text x="1150" y="135" fill="#fde9a8">HMI</text>
-
-        <!-- PLC (con marca de riesgo) -->
-        <rect x="940" y="215" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
-        <text x="990" y="240" fill="#fde9a8">PLC</text>
-        <rect x="936" y="211" width="108" height="48" rx="11" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0">
-          <animate attributeName="opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite"/>
-        </rect>
-
-        <!-- DAQ -->
-        <rect x="1100" y="215" width="100" height="40" rx="8" fill="#1a1a12" stroke="#f6d77a"/>
-        <text x="1150" y="240" fill="#fde9a8">DAQ</text>
-      </g>
-
-      <!-- Marca de hallazgo sobre PLC -->
-      <g transform="translate(1040 215)" font-family="Consolas, 'Courier New', monospace" font-size="12" font-weight="700" text-anchor="middle">
-        <circle r="10" fill="#f43f5e" filter="url(#glow)">
-          <animate attributeName="r" values="9;12;9" dur="1.2s" repeatCount="indefinite"/>
-        </circle>
-        <text y="4" fill="#fff">!</text>
-      </g>
-
-      <!-- Cortafuegos -->
-      <rect x="856" y="106" width="28" height="148" rx="6" fill="url(#fw)" filter="url(#glow)">
-        <animate attributeName="opacity" values="0.75;1;0.75" dur="2.4s" repeatCount="indefinite"/>
-      </rect>
-      <g stroke="#0a0e16" stroke-opacity="0.45" stroke-width="2">
-        <path d="M856 136 H884 M856 166 H884 M856 196 H884 M856 226 H884"/>
-      </g>
-      <text x="870" y="278" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="11" letter-spacing="1" fill="#ff9d3c">FW</text>
-
-      <!-- Paquetes permitidos -->
-      <circle r="5" fill="#5eead4" filter="url(#glow)" opacity="0">
-        <animateMotion dur="4.5s" repeatCount="indefinite" path="M820 180 H910 V130 H1100"/>
-        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.05;0.5;0.95;1" dur="4.5s" repeatCount="indefinite"/>
-      </circle>
-      <circle r="5" fill="#fde9a8" filter="url(#glow)" opacity="0">
-        <animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite" path="M990 130 V235 H1100"/>
-        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.05;0.5;0.95;1" dur="3.2s" begin="1.6s" repeatCount="indefinite"/>
-      </circle>
-      <circle r="4" fill="#5eead4" filter="url(#glow)" opacity="0">
-        <animateMotion dur="4.5s" begin="2.2s" repeatCount="indefinite" path="M1100 130 H990 V235 H1040"/>
-        <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.05;0.5;0.95;1" dur="4.5s" begin="2.2s" repeatCount="indefinite"/>
-      </circle>
-
-      <!-- Paquete bloqueado por el cortafuegos -->
-      <circle r="5" fill="#f43f5e" filter="url(#glow)" opacity="0">
-        <animateMotion dur="3s" begin="0.8s" repeatCount="indefinite" path="M730 120 H850" keyTimes="0;1" keyPoints="0;1" calcMode="linear"/>
-        <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.1;0.7;0.8;1" dur="3s" begin="0.8s" repeatCount="indefinite"/>
-      </circle>
-      <g stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" opacity="0">
-        <path d="M845 114 L857 126 M857 114 L845 126"/>
-        <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.6;0.75;0.9;1" dur="3s" begin="0.8s" repeatCount="indefinite"/>
-      </g>
-
-      <!-- Línea de escaneo -->
-      <rect x="0" y="52" width="36" height="256" fill="url(#scan)">
-        <animateTransform attributeName="transform" type="translate" values="690 0; 1204 0; 690 0" keyTimes="0;0.5;1" dur="7s" repeatCount="indefinite"/>
-      </rect>
+      <text x="806" y="129" font-size="13" font-weight="800" fill="#e6f4ff">IT-01</text>
+      <text x="806" y="145" font-size="10.5" fill="#8fb8d6">Administración IT</text>
     </g>
 
-    <!-- Líneas decorativas doradas -->
-    <rect x="0" y="0" width="1280" height="3" fill="url(#gold)"/>
-    <rect x="0" y="357" width="1280" height="3" fill="url(#gold)"/>
+    <!-- FW-01 -->
+    <circle cx="835" cy="214" r="26" fill="none" stroke="#ff6b4a" stroke-width="1.5" opacity="0">
+      <animate attributeName="r" values="24;42" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;0" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+    <path d="M835 190 L856 198 V215 Q856 231 835 240 Q814 231 814 215 V198 Z" fill="url(#fwg)" stroke="#ff6b4a" stroke-width="2" stroke-linejoin="round" filter="url(#glow)"/>
+    <path d="M818 205 H852 M818 216 H852 M818 227 H846" stroke="#ff6b4a" stroke-opacity="0.35" stroke-width="1.2"/>
+    <path d="M826 215 L833 222 L845 207" fill="none" stroke="#ffd7cf" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="835" y="260" font-size="11.5" font-weight="800" fill="#ff7d5f" text-anchor="middle" letter-spacing="0.6">FW-01 · FIREWALL</text>
+    <text x="835" y="275" font-size="10" fill="#8fb8d6" text-anchor="middle">Punto de control IT/OT</text>
+
+    <!-- OT-01 SCADA -->
+    <g transform="translate(978 108)">
+      <rect width="112" height="44" rx="8" fill="#0a3236" stroke="#2dd4bf" stroke-opacity="0.75" stroke-width="1.3"/>
+      <g fill="none" stroke="#5eead4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="11" y="12" width="17" height="20" rx="2"/><path d="M14 19H25 M14 24H25"/><circle cx="15.500" cy="28.500" r="1" fill="#5eead4"/>
+      </g>
+      <text x="38" y="19" font-size="12.5" font-weight="800" fill="#e6fff9">OT-01</text>
+      <text x="38" y="34" font-size="10" fill="#8dc9c0">SCADA</text>
+    </g>
+    <!-- OT-02 HMI -->
+    <g transform="translate(1120 108)">
+      <rect width="112" height="44" rx="8" fill="#0a3236" stroke="#2dd4bf" stroke-opacity="0.75" stroke-width="1.3"/>
+      <g fill="none" stroke="#5eead4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="10" y="13" width="19" height="14" rx="2"/><path d="M15 32H24 M19.500 27V32"/>
+      </g>
+      <text x="38" y="19" font-size="12.5" font-weight="800" fill="#e6fff9">OT-02</text>
+      <text x="38" y="34" font-size="10" fill="#8dc9c0">HMI</text>
+    </g>
+    <!-- OT-03 PLC (con hallazgo) -->
+    <g transform="translate(978 170)">
+      <rect width="112" height="44" rx="8" fill="#0a3236" stroke="#2dd4bf" stroke-opacity="0.75" stroke-width="1.3"/>
+      <g fill="none" stroke="#5eead4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="10" y="13" width="19" height="18" rx="2"/><path d="M14 18H25 M14 22H25 M14 26H20"/><circle cx="24.500" cy="26.500" r="1" fill="#5eead4"/>
+      </g>
+      <text x="38" y="19" font-size="12.5" font-weight="800" fill="#e6fff9">OT-03</text>
+      <text x="38" y="34" font-size="10" fill="#8dc9c0">PLC</text>
+      <rect x="-3" y="-3" width="118" height="50" rx="10" fill="none" stroke="#ff5a47" stroke-width="2" opacity="0">
+        <animate attributeName="opacity" values="0;0.95;0" dur="2.4s" repeatCount="indefinite"/>
+      </rect>
+      <g transform="translate(112 0)" font-size="12" font-weight="800" text-anchor="middle">
+        <circle r="9" fill="#ff5a47" filter="url(#glow)">
+          <animate attributeName="r" values="8;11;8" dur="1.4s" repeatCount="indefinite"/>
+        </circle>
+        <text y="4.200" fill="#ffffff">!</text>
+      </g>
+    </g>
+    <!-- OT-04 DAQ -->
+    <g transform="translate(1120 170)">
+      <rect width="112" height="44" rx="8" fill="#0a3236" stroke="#2dd4bf" stroke-opacity="0.75" stroke-width="1.3"/>
+      <g fill="none" stroke="#5eead4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="19.500" cy="22" r="9"/><path d="M19.500 13V31 M10.500 22H28.500"/>
+      </g>
+      <text x="38" y="19" font-size="12.5" font-weight="800" fill="#e6fff9">OT-04</text>
+      <text x="38" y="34" font-size="10" fill="#8dc9c0">Adquisición</text>
+    </g>
+    <!-- OT-05 Ingeniería -->
+    <g transform="translate(978 232)">
+      <rect width="112" height="44" rx="8" fill="#0a3236" stroke="#2dd4bf" stroke-opacity="0.75" stroke-width="1.3"/>
+      <g fill="none" stroke="#5eead4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="10" y="13" width="19" height="17" rx="2"/><path d="M14 18L18 21.500L14 25 M20 26H25"/>
+      </g>
+      <text x="38" y="19" font-size="12.5" font-weight="800" fill="#e6fff9">OT-05</text>
+      <text x="38" y="34" font-size="10" fill="#8dc9c0">Ingeniería</text>
+    </g>
+
+    <!-- Leyenda -->
+    <g font-size="10" fill="#9fc3dc">
+      <circle cx="1128" cy="242" r="3.500" fill="#5eead4"/>
+      <text x="1140" y="245.500">Tráfico permitido</text>
+      <path d="M1124.500 255.500 L1131.500 262.500 M1131.500 255.500 L1124.500 262.500" stroke="#ff5a47" stroke-width="1.8" stroke-linecap="round"/>
+      <text x="1140" y="263">Bloqueado por FW</text>
+      <circle cx="1128" cy="278" r="4.500" fill="#ff5a47"/>
+      <text x="1140" y="281.500">Hallazgo de riesgo</text>
+    </g>
+
+    <!-- Línea de escaneo -->
+    <rect x="0" y="70" width="34" height="225" fill="url(#scan)">
+      <animateTransform attributeName="transform" type="translate" values="740 0; 1211 0; 740 0" keyTimes="0;0.5;1" dur="9s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Aviso -->
+    <circle cx="745" cy="317" r="3" fill="#2dd4bf"/>
+    <text x="756" y="320.500" font-size="10.5" letter-spacing="1.8" fill="#8fb2cc">ENTORNO FICTICIO · USO DIDÁCTICO</text>
+
+    <!-- ===== Pie ===== -->
+    <path d="M40 338 H1240" stroke="#7fb5dc" stroke-opacity="0.22" stroke-width="1"/>
+    <g font-size="11" letter-spacing="3" fill="#6f93b0">
+      <text x="48" y="362">EREBOR ENERGY</text>
+      <text x="640" y="362" text-anchor="middle" fill="#8fb2cc">SECURE THE FORGE · MONITOR THE PROCESS</text>
+      <text x="1232" y="362" text-anchor="end">OT SENTINEL LAB</text>
+    </g>
+
+    <!-- Línea superior animada -->
+    <rect x="0" y="0" width="1280" height="3" fill="url(#accent)"/>
   </g>
 </svg>
