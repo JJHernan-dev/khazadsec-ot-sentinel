@@ -31,7 +31,6 @@ El analizador implementa cuatro reglas:
 | R-03 | Política de actualizaciones no definida | Media |
 | R-04 | Comunicación condicional sin control previsto documentado | Media |
 
-Las prioridades son orientativas y corresponden al catálogo de reglas del laboratorio; no sustituyen una evaluación de riesgos contextualizada.
 
 ## Requisitos
 
@@ -75,6 +74,22 @@ Con los datos ficticios actuales, el analizador genera cinco hallazgos: uno de R
 
 Los resultados son comprobaciones basadas en las reglas definidas y en los datos de ejemplo; no constituyen evidencia de incidentes reales ni una auditoría de una instalación industrial.
 
+## Demostración
+
+### Ejecución del analizador
+
+El analizador valida los datos de entrada, ejecuta las cuatro reglas de detección y genera un informe CSV con los hallazgos identificados en el escenario ficticio.
+
+<img src="img/demo-analizador.JPG"/>
+
+### Ejecución de las pruebas automatizadas
+
+La suite de pruebas comprueba las reglas de detección, la validación de los datos y el comportamiento esperado del analizador.
+
+<img src="img/demo-pruebas.JPG">
+
+
+
 ## Resultado esperado
 
 Con los datos de ejemplo incluidos en el repositorio, la ejecución genera cinco hallazgos:
@@ -84,16 +99,19 @@ Con los datos de ejemplo incluidos en el repositorio, la ejecución genera cinco
 - 3 hallazgos R-03: política de actualizaciones no definida.
 - 0 hallazgos R-04: no hay comunicaciones que cumplan actualmente esa condición.
 
-El analizador también valida referencias entre comunicaciones e inventario. Si encuentra referencias a activos inexistentes, detiene el análisis y muestra un error de validación.
+El analizador también valida los datos de entrada, incluidos los campos obligatorios y las referencias entre comunicaciones e inventario. Si detecta errores de validación, detiene el análisis y no actualiza el informe.
+
+Los hallazgos se basan exclusivamente en las reglas y los datos ficticios del proyecto. No constituyen evidencia de incidentes reales ni una auditoría de una instalación industrial.
 
 ## Estructura del proyecto
 
 ```text
 data/       Inventario y comunicaciones de ejemplo en CSV
 docs/       Escenario, reglas de detección y formato de hallazgos
-img/        Banner y diagrama del escenario
-src/        Analizador Python
+img/        Banner, diagrama del escenario y capturas de demostración
 reports/    Informes generados durante la ejecución
+src/        Analizador Python
+tests/      Pruebas automatizadas del analizador
 ```
 
 ## Limitaciones
@@ -105,7 +123,4 @@ reports/    Informes generados durante la ejecución
 - Una política de actualizaciones no definida no demuestra que un activo esté desactualizado.
 - Los hallazgos dependen de los datos de entrada y de las reglas implementadas; no equivalen a una auditoría completa ni certifican la seguridad de una instalación.
 
-## Estado del proyecto
-
-Versión inicial funcional: inventario de ejemplo, catálogo de cuatro reglas, validación de datos y generación de informes CSV.
 
